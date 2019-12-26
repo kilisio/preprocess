@@ -14,12 +14,14 @@ var metamorphosis = {
 	component: function(api) {
 		api.defaultProcessor = component_processor();
 		api.addHook("add", function(component) {
-			if(!(component instanceof Array)) component = [component];
+			if(!(component instanceof Array)) {
+                component = [component];
+            }
 			for(let i=0; i<component.length; i++) {
                 let c = component[i];
 				api.getRules("mainstream").push(c);
 			}
-			return true;
+			// return true;
 		});	
 
         return api;
@@ -30,7 +32,7 @@ var metamorphosis = {
 	'dynamic-css': function(api) {
 		api.dynamicCSS = true;
 	}
-}
+};
 
 export default function(api) {
 	return function(type) {
@@ -39,5 +41,5 @@ export default function(api) {
 			metamorphosis[type](api);
 		}
 		return api;
-	}
+	};
 }
