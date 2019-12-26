@@ -1,8 +1,0 @@
-{
-	"@page toc, index:blank": {
-		"color": "#000"
-	},
-	"@page": {
-		"fontSize": "12px"
-	}
-}

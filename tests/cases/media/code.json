@@ -1,8 +1,0 @@
-{
-	"header": {
-		"fontSize": "20px",
-		"@media print": {
-			"fontSize": "30px"
-		}
-	}
-}

@@ -1,7 +1,0 @@
----
-body:
-  margin: 0
-  padding: 0
-  fontSize: 1em
-  p:
-    lineHeight: 30px
