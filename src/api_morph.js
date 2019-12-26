@@ -15,7 +15,8 @@ var metamorphosis = {
 		api.defaultProcessor = component_processor();
 		api.addHook("add", function(component) {
 			if(!(component instanceof Array)) component = [component];
-			for(var i=0; i<component.length, c = component[i]; i++) {
+			for(let i=0; i<component.length; i++) {
+                let c = component[i];
 				api.getRules("mainstream").push(c);
 			}
 			return true;
