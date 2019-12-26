@@ -1,6 +1,6 @@
 import add_method from "./api_add.js";
-import morph_method from "./morph_add.js";
-import compile_method from "./compile_add.js";
+import morph_method from "./api_morph.js";
+import compile_method from "./api_compile.js";
 import css_processor from "./func_css.js";
 
 export default function() {
