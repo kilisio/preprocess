@@ -1,5 +1,7 @@
+import api from './api.js';
+
 export default function preprocess(func) {
-	let process = require("./API.js")();
+	let process = api();
 	if(typeof func === "function") {
 		func(process);
 	} else if(typeof func === "string") {
