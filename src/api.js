@@ -90,7 +90,7 @@ export default function() {
 		_rules = {};
 		_storage = {};
 		_hooks = {};
-		_api.defaultProcessor = require(__dirname + "/processors/css/CSS.js")();
+		_api.defaultProcessor = css_processor();
         _api.add = function(){
             if(_api.callHooks('add', arguments)){
                 return _api;
