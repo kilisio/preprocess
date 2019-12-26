@@ -3,7 +3,7 @@ import extend from "./func_extend.js";
 export default function(api) {
 	return function() {
 		var path = null, callback = function() {}, options = null;
-		for(var i=0; i<arguments.length; i++) {
+		for(let i=0; i<arguments.length; i++) {
 			switch(typeof arguments[i]) {
 				case "function": callback = arguments[i]; break;
 				case "string": path = arguments[i]; break;
@@ -23,7 +23,7 @@ export default function(api) {
 		return options.processor(
 			api.getRules(),
 			function(err, result) {
-				if(path != null) {
+				if(path !== null) {
 					try {
 						var fileContent = result;
 						if('object' === typeof fileContent) {
@@ -43,5 +43,5 @@ export default function(api) {
 			options
 		);
 		
-	}
+	};
 }
