@@ -1,6 +1,6 @@
-var extend = require("../helpers/Extend");
+import extend from "./func_extend.js";
 
-module.exports = function(api) {
+export default function(api) {
 	return function() {
 		var path = null, callback = function() {}, options = null;
 		for(var i=0; i<arguments.length; i++) {

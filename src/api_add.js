@@ -1,14 +1,15 @@
-module.exports = function(API) {
-	var extend = require("../helpers/Extend"),
-		prefixes = require("../helpers/Prefixes"),
-		toRegister = [],
+import extend from "./func_extend.js";
+import prefixes from "./func_prefixes.js";
+
+export default function(API) {
+	var toRegister = [],
 		options = {
 			combineSelectors: true,
 			preventCombining: ['@font-face']
 		};
 
 	var checkAndExecutePlugin = function(selector, prop, value, stylesheet, parentSelector) {
-		var prefix = prefixes.nonPrefixProp(prop);
+		var prefix = prefixes().nonPrefixProp(prop);
 		var plugin = API.getPlugins()[prefix.prop];
 		// console.log("\nChecking for plugin: " + prefix.prop + " (" + prop + ")");
 		if(typeof plugin !== 'undefined') {
@@ -81,7 +82,7 @@ module.exports = function(API) {
 						_selector = typeof parentSelector !== "undefined" ? parentSelector + " " + selector : selector;
 					}
 					_props[prop] = props[prop];
-					prefixes.addPrefixes(prop, _props);
+					prefixes().addPrefixes(prop, _props);
 				}
 			} else if(type === 'object') {
 				_objects[prop] = props[prop];

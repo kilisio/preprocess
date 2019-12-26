@@ -1,11 +1,13 @@
+import transformUppercase from "./func_transform.js";
+import extend from "./func_extend.js";
+import temp_eng from "./func_template.js";
+
 var newline = '\n',
 	defaultOptions = {
 		combineSelectors: true,
 		minify: false,
 		keepCamelCase: false
-	},
-	transformUppercase = require("../../helpers/TransformUppercase"),
-	extend = require("../../helpers/Extend");
+	};
 
 var toCSS = function(rules, options, indent) {
 	var css = '';
@@ -135,7 +137,7 @@ var replaceDefined = function(css, options) {
 	return css;
 }
 
-module.exports = function() {
+export default function() {
 	var processor = function(rules, callback, options) {
 		options = options || defaultOptions;
 		if(options.api && options.api.jsonify) {
@@ -156,7 +158,7 @@ module.exports = function() {
 		css = replaceDefined(css, options);
 		// Dynamic CSS
 		if(options && options.api && options.api.dynamicCSS) {
-			css = require("../html/helpers/TemplateEngine")(css, options);
+			css = temp_eng(css, options);
 		}
 		// Minification
 		if(options.minify) {

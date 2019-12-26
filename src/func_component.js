@@ -1,11 +1,14 @@
+import css_processor from "./func_css.js";
+import html_processor from "./func_html.js";
+
 var compileComponent = function(input, callback, options) {
 
 	var css = "", 
 		html = "", 
 		all = [],
 		api = options.api;
-		cssPreprocessor = require(__dirname + "/../css/CSS.js")(),
-		htmlPreprocessor = require(__dirname + "/../html/HTML.js")();
+		cssPreprocessor = css_processor(),
+		htmlPreprocessor = html_processor();
 
 	var processCSS = function(clb) {
 		for(var i=0; i<all.length, component=all[i]; i++) {
@@ -77,7 +80,8 @@ var compileComponent = function(input, callback, options) {
 	});
 	
 }
-module.exports = function() {
+
+export default function() {
 	var processor = function(rules, callback, options) {
 		compileComponent(rules.mainstream, callback, options);
 	}

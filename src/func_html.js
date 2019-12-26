@@ -1,9 +1,13 @@
+import js_beautify from "js-beautify";
+import tu from "./func_transform.js";
+import prop_analyzer from "./func_analyzer.js";
+import temp_eng from "./func_template.js";
+
 var data = null,
 	newline = '\n',
 	defaultOptions = {},
 	tags = [],
-	beautifyHTML = require('js-beautify').html,
-	tu = require("../../helpers/TransformUppercase"),
+	beautifyHTML = js_beautify.html,
 	passedOptions = {};
 
 var processTemplate = function(templateName) {
@@ -30,7 +34,7 @@ var process = function(tagName, obj) {
 
 	var html = '', attrs = '', childs = '';
 
-	var tagAnalized = require("./helpers/PropAnalyzer")(tagName);
+	var tagAnalized = prop_analyzer(tagName);
 	tagName = tagAnalized.tag;
 	if(tagAnalized.attrs != "") {
 		attrs += " " + tagAnalized.attrs;
@@ -150,14 +154,15 @@ var packTag = function(tagName, attrs, childs) {
 	return html;
 }
 var prepareHTML = function(html) {
-	html = require("./helpers/TemplateEngine")(html.replace(/[\r\t\n]/g, ''), passedOptions);
+	html = temp_eng(html.replace(/[\r\t\n]/g, ''), passedOptions);
 	if(passedOptions.minify) {
 		return html;
 	} else {
 		return beautifyHTML(html, {indent_size: passedOptions.indentSize || 4});
 	}
 }
-module.exports = function() {
+
+export default function() {
 	var processor = function(rules, callback, options) {
 		data = rules;
 		callback = callback || function() {};

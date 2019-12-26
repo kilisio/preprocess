@@ -1,6 +1,7 @@
 import add_method from "./api_add.js";
 import morph_method from "./morph_add.js";
 import compile_method from "./compile_add.js";
+import css_processor from "./func_css.js";
 
 export default function() {
 
@@ -62,7 +63,7 @@ export default function() {
 
     // internal variables
     _api.numOfAddedRules = 0;
-	_api.defaultProcessor = require(__dirname + "/processors/css/CSS.js")();
+    _api.defaultProcessor = css_processor();
 
     _api.add = function(){
         if(_api.callHooks('add', arguments)){
@@ -89,6 +90,7 @@ export default function() {
 		_rules = {};
 		_storage = {};
 		_hooks = {};
+		_api.defaultProcessor = require(__dirname + "/processors/css/CSS.js")();
         _api.add = function(){
             if(_api.callHooks('add', arguments)){
                 return _api;

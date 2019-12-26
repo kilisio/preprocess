@@ -1,4 +1,4 @@
-module.exports = function() {
+export default function() {
 	var process = function(destination, source) {	
 	    for(var key in source) {
 			if(Object.prototype.hasOwnProperty.call(source, key)) {

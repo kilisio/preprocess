@@ -1,4 +1,4 @@
-module.exports = function(prop) {
+export default function(prop) {
 	var res = { 
 			tag: '',
 			attrs: ''

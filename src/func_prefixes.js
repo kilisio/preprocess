@@ -17,31 +17,34 @@ var prefixExtract = function(prop) {
 	}
 	return result;
 }
-module.exports = {
-	addPrefixes: function(prop, obj) {
-		var originalProp = prop, p = prefixExtract(prop), value = obj[prop];
-		if(p.prefix !== false) {
-			delete obj[originalProp];
-			obj[p.prop] = value;
-			if(p.prefix === '' || p.prefix.indexOf('w') >= 0)
-				obj['-webkit-' + p.prop] = value;
-			if(p.prefix === '' || p.prefix.indexOf('m') >= 0)
-				obj['-moz-' + p.prop] = value;
-			if(p.prefix === '' || p.prefix.indexOf('s') >= 0)
-				obj['-ms-' + p.prop] = value;
-			if(p.prefix === '' || p.prefix.indexOf('o') >= 0)
-				obj['-o-' + p.prop] = value;
-		}
-	},
-	nonPrefixProp: function(prop) {
-		var p = prefixExtract(prop);
-		if(p.prefix !== false) {
-			if(p.prefix == '') { 
-				p.prefix = '-';
-			} else {
-				p.prefix = '-' + p.prefix + '-'; 
-			}
-		}
-		return p;
-	}
-}
+
+export default function(){
+    return {
+        addPrefixes: function(prop, obj) {
+            var originalProp = prop, p = prefixExtract(prop), value = obj[prop];
+            if(p.prefix !== false) {
+                delete obj[originalProp];
+                obj[p.prop] = value;
+                if(p.prefix === '' || p.prefix.indexOf('w') >= 0)
+                    obj['-webkit-' + p.prop] = value;
+                if(p.prefix === '' || p.prefix.indexOf('m') >= 0)
+                    obj['-moz-' + p.prop] = value;
+                if(p.prefix === '' || p.prefix.indexOf('s') >= 0)
+                    obj['-ms-' + p.prop] = value;
+                if(p.prefix === '' || p.prefix.indexOf('o') >= 0)
+                    obj['-o-' + p.prop] = value;
+            }
+        },
+        nonPrefixProp: function(prop) {
+            var p = prefixExtract(prop);
+            if(p.prefix !== false) {
+                if(p.prefix == '') { 
+                    p.prefix = '-';
+                } else {
+                    p.prefix = '-' + p.prefix + '-'; 
+                }
+            }
+            return p;
+        }
+    };
+} 

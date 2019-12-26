@@ -1,13 +1,16 @@
+import html_processor from "./func_html.js";
+import component_processor from "./func_component.js";
+
 var metamorphosis = {
 	html: function(api) {
-		api.defaultProcessor = require(__dirname + "/../processors/html/HTML.js")();
+		api.defaultProcessor = html_processor();
 		api.hook("add", function(tags, template) {
 			api.getRules(template || "mainstream").push(tags);
 			return true;
 		});
 	},
 	component: function(api) {
-		api.defaultProcessor = require(__dirname + "/../processors/component/Component.js")();
+		api.defaultProcessor = component_processor();
 		api.hook("add", function(component) {
 			if(!(component instanceof Array)) component = [component];
 			for(var i=0; i<component.length, c = component[i]; i++) {
@@ -23,7 +26,8 @@ var metamorphosis = {
 		api.dynamicCSS = true;
 	}
 }
-module.exports = function(api) {
+
+export default function(api) {
 	return function(type) {
 		if(metamorphosis[type]) {
 			api.flush();
