@@ -21,25 +21,27 @@ export default function(API) {
 		} else {
 			return false;
 		}
-	}
+	};
+
 	var addRule = function(selector, props, stylesheet, parentSelector) {
 		// console.log("\n---------- addRule ---------", parentSelector + ' >>> ' + selector, "\n", props);
 
 		stylesheet = stylesheet || "mainstream";
 
 		// catching null values
-		if(props === null || typeof props === 'undefined' || props === false) return;
-		if(!parentSelector && !selector) selector = '';
+		if(props === null || typeof props === 'undefined' || props === false) { return; }
+		if(!parentSelector && !selector) { selector = ''; }
 
 		// classify
-		if(typeof props.classify != 'undefined' && props.classify === true) {
-			props = typeof props.toJSON != 'undefined' ? props.toJSON() : props.toString();
+		if(typeof props.classify !== 'undefined' && props.classify === true) {
+			props = typeof props.toJSON !== 'undefined' ? props.toJSON() : props.toString();
 		}
 
 		// multiple selectors
 		if(/, ?/g.test(selector) && options.combineSelectors) {
-			var parts = selector.replace(/, /g, ',').split(',');
-			for(var i=0; i<parts.length, p=parts[i]; i++) {
+			let parts = selector.replace(/, /g, ',').split(',');
+			for(let i=0; i<parts.length; i++) {
+                let p=parts[i];
 				addRule(p, props, stylesheet, parentSelector);	
 			}
 			return;
@@ -52,8 +54,8 @@ export default function(API) {
 
 		// if array is passed
 		if(typeof props.length !== 'undefined' && typeof props === "object") {
-			for(var i=0; i<props.length; i++) {
-				prop=props[i];
+			for(let i=0; i<props.length; i++) {
+				let prop=props[i];
 				if(prop) {
 					addRule(selector, prop, stylesheet, parentSelector);
 				}
@@ -67,10 +69,10 @@ export default function(API) {
 			_functions = {};
 
 		// processing props
-		for(var prop in props) {
+		for(let prop in props) {
 			// classify
-			if(props[prop] && typeof props[prop].classify != 'undefined' && props[prop].classify === true) {
-				props[prop] = typeof props[prop].toJSON != 'undefined' ? props[prop].toJSON() : props[prop].toString();
+			if(props[prop] && typeof props[prop].classify !== 'undefined' && props[prop].classify === true) {
+				props[prop] = typeof props[prop].toJSON !== 'undefined' ? props[prop].toJSON() : props[prop].toString();
 			}
 			var type = typeof props[prop];
 			if(type !== 'object' && type !== 'function' && props[prop] !== false && props[prop] !== true) {
@@ -97,15 +99,16 @@ export default function(API) {
 			stylesheet: stylesheet
 		});
 
-		for(var prop in _objects) {
+		for(let prop in _objects) {
 			// check for pseudo classes			
 			if(prop.charAt(0) === ":") {
 				addRule(selector + prop, _objects[prop], stylesheet, parentSelector);
 		    // check for ampersand operator
 			} else if(/&/g.test(prop)) {
 				if(/, ?/g.test(prop) && options.combineSelectors) {
-					var parts = prop.replace(/, /g, ',').split(',');
-					for(var i=0; i<parts.length, p=parts[i]; i++) {
+					let parts = prop.replace(/, /g, ',').split(',');
+					for(let i=0; i<parts.length; i++) {
+                        let p=parts[i];
 						if(p.indexOf('&') >= 0) {
 							addRule(p.replace(/&/g, selector), _objects[prop], stylesheet, parentSelector);
 						} else {
@@ -135,13 +138,13 @@ export default function(API) {
 			}
 		}
 
-		for(var prop in _functions) {
-			var o = {};
+		for(let prop in _functions) {
+			let o = {};
 			o[prop] = _functions[prop]();
 			addRule(selector, o, stylesheet, parentSelector);
 		}
 		
-	}
+	};
 
 	var add = function(rules, stylesheet, opts) {
 
@@ -157,12 +160,12 @@ export default function(API) {
 
 			if(typeof stylesheet === 'object' && typeof opts === 'undefined') {
 				options = {
-					combineSelectors: typeof stylesheet.combineSelectors != 'undefined' ? stylesheet.combineSelectors : options.combineSelectors,
+					combineSelectors: typeof stylesheet.combineSelectors !== 'undefined' ? stylesheet.combineSelectors : options.combineSelectors,
 					preventCombining: options.preventCombining.concat(stylesheet.preventCombining || [])
 				};
 				stylesheet = null;
 			}
-			if(typeof opts != 'undefined') {
+			if(typeof opts !== 'undefined') {
 				options = {
 					combineSelectors: opts.combineSelectors || options.combineSelectors,
 					preventCombining: options.preventCombining.concat(opts.preventCombining || [])
@@ -171,25 +174,25 @@ export default function(API) {
 
 			var typeOfPreprocessor = API.defaultProcessor.type, uid;
 
-			for(var selector in rules) {
+			for(let selector in rules) {
 				addRule(selector, rules[selector], stylesheet || "mainstream");
 			}
 
 			// looping through the rules for registering
-			for(var i=0; i<toRegister.length; i++) {
-				var stylesheet = toRegister[i].stylesheet,
+			for(let i=0; i<toRegister.length; i++) {
+				let stylesheet = toRegister[i].stylesheet,
 					selector = toRegister[i].selector,
 					props = toRegister[i].props,
 					allRules = API.getRules(stylesheet);
-				var pc = options && options.preventCombining ? '|' + options.preventCombining.join('|') : '';
-				var uid = pc.indexOf('|' + selector.replace(/^%.*?%/, '')) >= 0 ? '~~' + API.numOfAddedRules + '~~' : '';
+				let pc = options && options.preventCombining ? '|' + options.preventCombining.join('|') : '';
+				let uid = pc.indexOf('|' + selector.replace(/^%.*?%/, '')) >= 0 ? '~~' + API.numOfAddedRules + '~~' : '';
 				// overwrite already added value
-				var current = allRules[uid + selector] || {};
-				for(var propNew in props) {
+				let current = allRules[uid + selector] || {};
+				for(let propNew in props) {
 					var value = props[propNew];
 					propNew = uid + propNew;
-					if(typeof value != 'object') {
-						if(typeOfPreprocessor == "css") {
+					if(typeof value !== 'object') {
+						if(typeOfPreprocessor === "css") {
 							// appending values
 							if(value.toString().charAt(0) === "+") {
 								if(current && current[propNew]) {
@@ -220,6 +223,6 @@ export default function(API) {
 		} catch(err) {
 			throw new Error("Error adding: " + JSON.stringify({rules: rules, error: err.toString()}));
 		}
-	}
+	};
 	return add;
 }
