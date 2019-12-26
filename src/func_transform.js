@@ -1,6 +1,7 @@
 export default function(prop, options) {
 	var transformed = "";
-	for(var i=0; c=prop.charAt(i); i++) {
+	for(let i=0; i<prop.length; i++) {
+        let c=prop.charAt(i);
 		if(c === c.toUpperCase() && c.toLowerCase() !== c.toUpperCase()) {
 			transformed += "-" + c.toLowerCase();
 		} else {
