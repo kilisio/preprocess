@@ -6,29 +6,30 @@ import temp_eng from "./func_template.js";
 var data = null,
 	newline = '\n',
 	defaultOptions = {},
-	tags = [],
 	beautifyHTML = js_beautify.html,
 	passedOptions = {};
 
 var processTemplate = function(templateName) {
 	var html = '';
-	for(var template in data) {
-		if(template == templateName) {
+	for(let template in data) {
+		if(template === templateName) {
 			var numOfRules = data[template].length;
-			for(var i=0; i<numOfRules; i++) {
+			for(let i=0; i<numOfRules; i++) {
 				html += process('', data[template][i]);
 			}
 		}
 	}
 	return html;
-}
+};
+
 var prepareProperty = function(prop, options) {
 	if(options && options.keepCamelCase === true) {
 		return prop;
 	} else {
 		return tu(prop, options);
 	}
-}
+};
+
 var process = function(tagName, obj) {
 	// console.log("------------------------\n", tagName, ">", obj);
 
@@ -36,7 +37,7 @@ var process = function(tagName, obj) {
 
 	var tagAnalized = prop_analyzer(tagName);
 	tagName = tagAnalized.tag;
-	if(tagAnalized.attrs != "") {
+	if(tagAnalized.attrs !== "") {
 		attrs += " " + tagAnalized.attrs;
 	}
 
@@ -45,13 +46,13 @@ var process = function(tagName, obj) {
 	}
 
 	var addToChilds = function(value) {
-		if(childs != '') { childs += newline; }
+		if(childs !== '') { childs += newline; }
 		childs += value;
-	}
+	};
 
 	var addEventAttribute = function(obj) {
 		var addition = [];
-		for(var eventName in obj) {
+		for(let eventName in obj) {
 			addition.push(eventName.replace(/^\$/, '') + ':' + obj[eventName]);
 		}
 		if(addition.length > 0) {
@@ -61,17 +62,17 @@ var process = function(tagName, obj) {
 				attrs += ' data-absurd-event="' + addition.join(',') + '"';
 			}
 		}
-	}
+	};
 
 	// process directives
-	for(var directiveName in obj) {
+	for(let directiveName in obj) {
 		var value = obj[directiveName];
 		if(/^\$/.test(directiveName)) {
 			addEventAttribute(obj);
 		} else {
 			switch(directiveName) {
 				case "_attrs":
-					for(var attrName in value) {
+					for(let attrName in value) {
 						if(typeof value[attrName] === "function") {
 							attrs += " " + prepareProperty(attrName, passedOptions) + "=\"" + value[attrName]() + "\"";
 						} else {
@@ -83,26 +84,28 @@ var process = function(tagName, obj) {
 					addToChilds(value);
 				break;
 				case "_tpl": 
-					if(typeof value == "string") {
+					if(typeof value === "string") {
 						addToChilds(processTemplate(value));
 					} else if(value instanceof Array) {
-						var tmp = '';
-						for(var i=0; tpl=value[i]; i++) {
-							tmp += processTemplate(tpl)
-							if(i < value.length-1) tmp += newline;
+						let tmp = '';
+						for(let i=0; i<value.length; i++) {
+                            let tpl=value[i];
+							tmp += processTemplate(tpl);
+							if(i < value.length-1){ tmp += newline;}
 						}
 						addToChilds(tmp);
 					}
 				break;
 				case "_include":
-					var tmp = '';
-					var add = function(o) {
+					let tmp = '';
+					let add = function(o) {
 						if(typeof o === "function") { o = o(); }
 						if(o.css && o.html) { o = o.html; } // catching a component
 						tmp += process('', o);
-					}
+					};
 					if(value instanceof Array) {
-						for(var i=0; i<value.length, o=value[i]; i++) {
+						for(let i=0; i<value.length ; i++) {
+                            let o=value[i];
 							add(o);
 						}
 					} else if(typeof value === "object"){
@@ -115,10 +118,13 @@ var process = function(tagName, obj) {
 						case "string": addToChilds(process(directiveName, value)); break;
 						case "object": 
 							if(value && value.length && value.length > 0) {
-								var tmp = '';
-								for(var i=0; v=value[i]; i++) {
-									tmp += process('', typeof v == "function" ? v() : v);
-									if(i < value.length-1) tmp += newline;
+								let tmp = '';
+								for(let i=0; i<value.length; i++) {
+                                    let v=value[i];
+									tmp += process('', typeof v === "function" ? v() : v);
+									if(i < value.length-1){ 
+                                        tmp += newline;
+                                    }
 								}
 								addToChilds(process(directiveName, tmp));
 							} else {
@@ -132,27 +138,29 @@ var process = function(tagName, obj) {
 		}
 	}
 
-	if(tagName != '') {
+	if(tagName !== '') {
 		html += packTag(tagName, attrs, childs);
 	} else {
 		html += childs;
 	}
 
 	return html;
-}
+};
+
 var packTag = function(tagName, attrs, childs) {
-	var html = '';
-	if(tagName == '' && attrs == '' && childs != '') {
+	let html = '';
+	if(tagName === '' && attrs === '' && childs !== '') {
 		return childs;
 	}
-	tagName = tagName == '' ? 'div' : tagName;
+	tagName = tagName === '' ? 'div' : tagName;
 	if(childs !== null) {
 		html += '<' + prepareProperty(tagName, passedOptions) + attrs + '>' + newline + childs + newline + '</' + prepareProperty(tagName, passedOptions) + '>';
 	} else {
 		html += '<' + prepareProperty(tagName, passedOptions) + attrs + '/>';
 	}
 	return html;
-}
+};
+
 var prepareHTML = function(html) {
 	html = temp_eng(html.replace(/[\r\t\n]/g, ''), passedOptions);
 	if(passedOptions.minify) {
@@ -160,17 +168,18 @@ var prepareHTML = function(html) {
 	} else {
 		return beautifyHTML(html, {indent_size: passedOptions.indentSize || 4});
 	}
-}
+};
 
 export default function() {
-	var processor = function(rules, callback, options) {
+	let processor = function(rules, callback, options) {
 		data = rules;
 		callback = callback || function() {};
 		options = passedOptions = options || defaultOptions;
 		var html = prepareHTML(processTemplate("mainstream"));
 		callback(null, html);
 		return html;
-	}
+	};
+
 	processor.type = "html";
 	return processor;
 }
