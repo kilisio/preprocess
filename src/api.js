@@ -1,4 +1,6 @@
-var fs = require('fs');
+import add_method from "./api_add.js";
+import morph_method from "./morph_add.js";
+import compile_method from "./compile_add.js";
 
 export default function() {
 
@@ -25,15 +27,6 @@ export default function() {
 
 	_api.getStorage = function() {
 		return _storage;
-	};
-
-	_api.flush = function() {
-		_rules = {};
-		_storage = {};
-		_hooks = {};
-		_api.defaultProcessor = require(__dirname + "/processors/css/CSS.js")();
-		registerAPIMethods();
-		return _api;
 	};
 
 	// hooks
@@ -67,27 +60,55 @@ export default function() {
 		return false;
 	};
 
-	// internal variables
-	_api.numOfAddedRules = 0;
+    // internal variables
+    _api.numOfAddedRules = 0;
 	_api.defaultProcessor = require(__dirname + "/processors/css/CSS.js")();
 
-	var registerAPIMethods = function() {
-		if(fs.existsSync(__dirname + "/api")) {
-			var methods = fs.readdirSync(__dirname + "/api");
-			for(var i=0; i<methods.length; i++) {
-				var file = methods[i];
-				_api[file.replace(".js", "")] = (function(file) {
-					return function() {
-						var f = require(__dirname + "/api/" + file)(_api);
-						if(_api.callHooks(file.replace(".js", ""), arguments)) return _api;
-						return f.apply(_api, arguments);
-					}
-				})(file);			
-			}
-		}
-	}
+    _api.add = function(){
+        if(_api.callHooks('add', arguments)){
+            return _api;
+        }
+        return add_method(_api).apply(_api, arguments);
+    };
 
-	registerAPIMethods();
+    _api.morph = function(){
+        if(_api.callHooks('morph', arguments)){
+            return _api;
+        }
+        return morph_method(_api).apply(_api, arguments);
+    };
+
+    _api.compile = function(){
+        if(_api.callHooks('compile', arguments)){
+            return _api;
+        }
+        return compile_method(_api).apply(_api, arguments);
+    };
+
+	_api.flush = function() {
+		_rules = {};
+		_storage = {};
+		_hooks = {};
+        _api.add = function(){
+            if(_api.callHooks('add', arguments)){
+                return _api;
+            }
+            return add_method(_api).apply(_api, arguments);
+        };
+        _api.morph = function(){
+            if(_api.callHooks('morph', arguments)){
+                return _api;
+            }
+            return morph_method(_api).apply(_api, arguments);
+        };
+        _api.compile = function(){
+            if(_api.callHooks('compile', arguments)){
+                return _api;
+            }
+            return compile_method(_api).apply(_api, arguments);
+        };
+		return _api;
+	};
 
 	return _api;
 
