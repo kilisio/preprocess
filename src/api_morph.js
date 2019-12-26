@@ -4,20 +4,24 @@ import component_processor from "./func_component.js";
 var metamorphosis = {
 	html: function(api) {
 		api.defaultProcessor = html_processor();
-		api.hook("add", function(tags, template) {
+		api.addHook("add", function(tags, template) {
 			api.getRules(template || "mainstream").push(tags);
 			return true;
 		});
+
+        return api;
 	},
 	component: function(api) {
 		api.defaultProcessor = component_processor();
-		api.hook("add", function(component) {
+		api.addHook("add", function(component) {
 			if(!(component instanceof Array)) component = [component];
 			for(var i=0; i<component.length, c = component[i]; i++) {
 				api.getRules("mainstream").push(c);
 			}
 			return true;
 		});	
+
+        return api;
 	},
 	jsonify: function(api) {
 		api.jsonify = true;
