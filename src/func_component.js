@@ -6,12 +6,13 @@ var compileComponent = function(input, callback, options) {
 	var css = "", 
 		html = "", 
 		all = [],
-		api = options.api;
+		api = options.api,
 		cssPreprocessor = css_processor(),
 		htmlPreprocessor = html_processor();
 
 	var processCSS = function(clb) {
-		for(var i=0; i<all.length, component=all[i]; i++) {
+		for(let i=0; i<all.length ; i++) {
+            let component=all[i];
 			if(typeof component === "function") { component = component(); }
 			api.add(component.css ? component.css : {});
 		}
@@ -19,7 +20,7 @@ var compileComponent = function(input, callback, options) {
 			css += result;
 			clb(err);
 		}, options);
-	}
+	};
 	var processHTML = function(clb) {
 		var index = 0;
 		var error = null;
@@ -37,14 +38,15 @@ var compileComponent = function(input, callback, options) {
 				error = err;
 				processComponent();
 			}, options);
-		}
+		};
 		processComponent();
-	}
+	};
 	var checkForNesting = function(o) {
-		for(var key in o) {
+		for(let key in o) {
 			if(key === "_include") {
 				if(o[key] instanceof Array) {
-					for(var i=0; i<o[key].length, c=o[key][i]; i++) {
+					for(let i=0; i<o[key].length ; i++) {
+                        let c=o[key][i];
 						if(typeof c === "function") { c = c(); }
 						all.push(c);
 						checkForNesting(c);
@@ -58,10 +60,11 @@ var compileComponent = function(input, callback, options) {
 				checkForNesting(o[key]);
 			}
 		}
-	}
+	};
 
 	// Checking for nesting. I.e. collecting the css and html.
-	for(var i=0; i<input.length, c=input[i]; i++) {
+	for(let i=0; i<input.length ; i++) {
+        let c=input[i];
 		if(typeof c === "function") { c = c(); }
 		all.push(c);
 		checkForNesting(c);
@@ -75,16 +78,16 @@ var compileComponent = function(input, callback, options) {
 				errCSS || errHTML ? {error: {css: errCSS, html: errHTML }} : null,
 				css,
 				html
-			)
+			);
 		});
 	});
 	
-}
+};
 
 export default function() {
-	var processor = function(rules, callback, options) {
+	let processor = function(rules, callback, options) {
 		compileComponent(rules.mainstream, callback, options);
-	}
+	};
 	processor.type = "component";
 	return processor;
 }
