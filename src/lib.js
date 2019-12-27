@@ -97,7 +97,10 @@ export default function preprocess(func) {
 //     api.morph('html').add(test_html).compile(function(err, result){
 //         console.log(result);
 //     });
-//     api.morph('component').add(test_component).compile(function(err, result){
+//     api.add(test_component.css).compile(function(err, result){
+//         console.log(result);
+//     });
+//     api.morph('html').add(test_component.html).compile(function(err, result){
 //         console.log(result);
 //     });
 // });
