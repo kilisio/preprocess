@@ -85,11 +85,19 @@ export default function preprocess(func) {
 //     }
 // };
 //
+// var test_component = {
+//     html: test_html,
+//     css: test_css
+// };
+//
 // preprocess(function(api){
 //     api.add(test_css).compile(function(err, result){
 //         console.log(result);
 //     });
 //     api.morph('html').add(test_html).compile(function(err, result){
+//         console.log(result);
+//     });
+//     api.morph('component').add(test_component).compile(function(err, result){
 //         console.log(result);
 //     });
 // });
