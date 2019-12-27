@@ -1,5 +1,4 @@
 import html_processor from "./func_html.js";
-import component_processor from "./func_component.js";
 
 var metamorphosis = {
 	html: function(api) {
@@ -11,26 +10,8 @@ var metamorphosis = {
 
         return api;
 	},
-	component: function(api) {
-		api.defaultProcessor = component_processor();
-		api.addHook("add", function(component) {
-			if(!(component instanceof Array)) {
-                component = [component];
-            }
-			for(let i=0; i<component.length; i++) {
-                let c = component[i];
-				api.getRules("mainstream").push(c);
-			}
-			// return true;
-		});	
-
-        return api;
-	},
 	jsonify: function(api) {
 		api.jsonify = true;
-	},
-	'dynamic-css': function(api) {
-		api.dynamicCSS = true;
 	}
 };
 
