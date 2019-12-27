@@ -38,7 +38,7 @@ I do not intend to publish this package to the `npm` package registry. If you ha
 ```
 
 The above will publish the package to `verdaccio` if you have it configured as your default package publishing registry.  
-Then simply install and add it to your lit-element script:
+Then simply install and add it to your project script:
 
 ```bash
     npm install @kilisio/preprocess
