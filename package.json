@@ -11,20 +11,8 @@
     "url": "http://krasimirtsonev.com"
   },
   "license": "MIT",
-  "dependencies": {
-    "optimist": "0.6.1",
-    "colors": "0.6.2",
-    "gaze": "1.1.0",
-    "glob": "5.0.15",
-    "js-yaml": "^3.10.0",
-    "js-beautify": "1.4.2"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "grunt": "0.4.2",
-    "grunt-contrib-concat": "0.3.0",
-    "grunt-contrib-watch": "0.5.3",
-    "grunt-contrib-uglify": "0.3.2",
-    "jasmine-node": "1.13.1",
     "@commitlint/cli": "^7.4.0",
     "@commitlint/config-conventional": "^7.3.1",
     "@kilisio/panzoom": "^1.0.0",
@@ -43,6 +31,7 @@
     "html-minifier": "^4.0.0",
     "husky": "^1.3.1",
     "javascript-obfuscator": "^0.18.4",
+    "js-beautify": "^1.10.2",
     "jshint": "^2.9.7",
     "open": "^6.4.0",
     "pouchdb": "^7.1.1",
@@ -75,7 +64,7 @@
     "absurd": "./index.js"
   },
   "scripts": {
-    "test": "./node_modules/jasmine-node/bin/jasmine-node ./tests",
+    "dist": "rollup -c config/rollup/lib.config.js",
     "rls": "standard-version",
     "commit": "git-cz"
   },
