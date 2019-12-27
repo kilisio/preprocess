@@ -1,14 +1,12 @@
 {
-  "name": "absurd",
+  "name": "preprocess",
   "version": "0.3.8",
-  "homepage": "http://absurdjs.com/",
-  "description": "JavaScript library with superpowers - http://absurdjs.com/",
-  "main": "./index.js",
-  "browser": "./client-side/build/absurd.min.js",
+  "homepage": "",
+  "description": "html and css preprocessor",
   "author": {
-    "name": "Krasimir Tsonev",
-    "email": "info@krasimirtsonev.com",
-    "url": "http://krasimirtsonev.com"
+    "name": "Kilisio",
+    "email": "pkilisio@gmail.com",
+    "url": ""
   },
   "license": "MIT",
   "dependencies": {},
@@ -54,14 +52,12 @@
   },
   "keywords": [
     "css",
+    "html",
     "preprocessor"
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/krasimir/absurd.git"
-  },
-  "bin": {
-    "absurd": "./index.js"
+    "url": "https://github.com/kilisio/preprocess.git"
   },
   "scripts": {
     "dist": "rollup -c config/rollup/lib.config.js",
