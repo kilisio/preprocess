@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.3.10"></a>
+## [0.3.10](https://github.com/kilisio/preprocess/compare/v0.3.9...v0.3.10) (2019-12-27)
+
+
+### Bug Fixes
+
+* **api_morph.js:** removed component preprocessing option ([081bb0d](https://github.com/kilisio/preprocess/commit/081bb0d))
+
+
+
 <a name="0.3.9"></a>
 ## 0.3.9 (2019-12-27)
 
