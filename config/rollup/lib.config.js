@@ -3,7 +3,7 @@ import cleanup from 'rollup-plugin-cleanup';
 // import copy from 'rollup-plugin-copy';
 import resolve from 'rollup-plugin-node-resolve';
 import commonJS from 'rollup-plugin-commonjs';
-import { terser } from "rollup-plugin-terser";
+// import { terser } from "rollup-plugin-terser";
 import generatePackageJson from 'rollup-plugin-generate-package-json';
 import json from 'rollup-plugin-json';
 // import replace from 'rollup-plugin-replace';
@@ -19,69 +19,33 @@ export default [
                 format: 'cjs'
             },
             plugins: [
-                    clear({
-                        targets: ['dist/lib'],
-                    }),
-                //	replace({
-                //		delimiters: ['', ''],
-                //		'#!/usr/bin/env node': ''
-                //	}),
-                // replace({
-                //	   exclude: 'node_modules/**',
-                //	   delimiters: ['./', '/'],
-                //	   values: {
-                //		   assets: './' + pkgson.name + '/assets/',
-                //		   db: './' + pkgson.name + '/db/',
-                //		   log: './' + pkgson.name + '/log/'
-                //	   }
-                // }),
-                // replace({
-                //	   exclude: 'node_modules/**',
-                //	   delimiters: ['@', '@'],
-                //	   values: {
-                //		   package_name: pkgson.name,
-                //		   package_version: pkgson.version
-                //	   }
-                // }),
-                    json({
-                        include: 'node_modules/**',
-                    }),
-                    resolve(),
-                    commonJS({
-                        include: 'node_modules/**'
-                    }),
-                    cleanup(),
-                    terser(),
-                //	obfuscator({
-                //		fileOptions:{},
-                //		globalOptions: false,
-                //		include: ['**/*.js'],
-                //		exclude: ['node_modules/**']
-                //	}),
-                	generatePackageJson({
-                		outputFolder: '',
-                		baseContents: {
-                			"name": "@kilisio/" + pkgson.name + "",
-                			"version": pkgson.version,
-                			"author": "kilisio",
-                			"dependencies": {},
-                            "main": "lib",
-                			// "publishConfig": {
-                			//		"registry":"registry.npmjs.org"
-                			// },
-                			// "scripts": {
-                			// 	"start": ""
-                			// }
-                		}
-                	}),
-                //	copy({
-                //		targets: [
-                //			{
-                //				src: [], 
-                //				dest: ''
-                //			},
-                //		]
-                //	}),
+                clear({
+                    targets: ['dist/lib'],
+                }),
+                json({
+                    include: 'node_modules/**',
+                }),
+                resolve(),
+                commonJS({
+                    include: 'node_modules/**'
+                }),
+                cleanup(),
+                generatePackageJson({
+                    outputFolder: '',
+                    baseContents: {
+                        "name": "@kilisio/" + pkgson.name + "",
+                        "version": pkgson.version,
+                        "author": "kilisio",
+                        "dependencies": {},
+                        "main": "lib",
+                        // "publishConfig": {
+                        //		"registry":"registry.npmjs.org"
+                        // },
+                        // "scripts": {
+                        // 	"start": ""
+                        // }
+                    }
+                }),
             ]
         },
 ];
