@@ -61,6 +61,7 @@
   },
   "scripts": {
     "dist": "rollup -c config/rollup/lib.config.js",
+    "pub_lib": "cd $INIT_CWD/dist/lib && npm publish",
     "rls": "standard-version",
     "commit": "git-cz"
   },
