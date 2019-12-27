@@ -48,7 +48,7 @@ Then simply install and add it to your lit-element script:
     import preprocess from '@kilisio/preprocess';
 ```
 
-The package scope `@kilisio` and other package details may be changed and configured in the `lib_build.config.js` script before building the library.
+The package scope `@kilisio` and other package details may be changed and configured in the `lib.config.js` script before building the library.
 
 
 ## Usage
